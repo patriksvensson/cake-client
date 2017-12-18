@@ -2,16 +2,25 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
+    <StartupObject>Cake.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="Spectre.CommandLine" Version="0.6.0" />
+    <PackageReference Include="Cake.Common" Version="0.23.0" />
+    <PackageReference Include="Cake.Core" Version="0.23.0" />
+    <PackageReference Include="Cake.NuGet" Version="0.23.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="2.6.1" />
+    <PackageReference Include="Spectre.CommandLine" Version="0.7.0" />
   </ItemGroup>
 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <Folder Include="Scripting\" />
   </ItemGroup>
 
 </Project>

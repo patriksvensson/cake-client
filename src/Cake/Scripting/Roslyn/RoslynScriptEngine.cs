@@ -1,0 +1,30 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using Cake.Core.Diagnostics;
+using Cake.Core.Reflection;
+using Cake.Core.Scripting;
+using Cake.Internal;
+
+namespace Cake.Scripting.Roslyn
+{
+    internal sealed class RoslynScriptEngine : IScriptEngine
+    {
+        private readonly ScriptOptions _options;
+        private readonly IAssemblyLoader _loader;
+        private readonly ICakeLog _log;
+
+        public RoslynScriptEngine(ScriptOptions options, IAssemblyLoader loader, ICakeLog log)
+        {
+            _options = options;
+            _loader = loader;
+            _log = log;
+        }
+
+        public IScriptSession CreateSession(IScriptHost host)
+        {
+            return new RoslynScriptSession(_options, host, _loader, _log);
+        }
+    }
+}
