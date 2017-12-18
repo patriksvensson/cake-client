@@ -5,17 +5,16 @@
 using Cake.Core.Diagnostics;
 using Cake.Core.Reflection;
 using Cake.Core.Scripting;
-using Cake.Internal;
 
 namespace Cake.Scripting.Roslyn
 {
     internal sealed class RoslynScriptEngine : IScriptEngine
     {
-        private readonly ScriptOptions _options;
+        private readonly RoslynScriptOptions _options;
         private readonly IAssemblyLoader _loader;
         private readonly ICakeLog _log;
 
-        public RoslynScriptEngine(ScriptOptions options, IAssemblyLoader loader, ICakeLog log)
+        public RoslynScriptEngine(RoslynScriptOptions options, IAssemblyLoader loader, ICakeLog log)
         {
             _options = options;
             _loader = loader;

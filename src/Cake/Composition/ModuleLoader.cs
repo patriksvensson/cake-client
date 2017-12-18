@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autofac;
 using Cake.Commands;
 using Cake.Core;
@@ -9,9 +8,8 @@ using Cake.Core.Composition;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.Internal.Composition;
 
-namespace Cake.Internal
+namespace Cake.Composition
 {
     internal sealed class ModuleLoader
     {

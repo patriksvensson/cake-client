@@ -1,12 +1,12 @@
 ﻿using Cake.Core.Diagnostics;
 
-namespace Cake.Internal.Diagnostics
+namespace Cake.Diagnostics
 {
-    internal sealed class LogSettings
+    internal sealed class ConsoleLogSettings
     {
         public Verbosity Verbosity { get; }
 
-        public LogSettings(Verbosity verbosity)
+        public ConsoleLogSettings(Verbosity verbosity)
         {
             Verbosity = verbosity;
         }

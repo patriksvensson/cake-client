@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using Cake.Core.IO;
 
-namespace Cake.Internal.Converters
+namespace Cake.Converters
 {
     internal sealed class FilePathConverter : TypeConverter
     {

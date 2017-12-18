@@ -1,18 +1,16 @@
 ﻿using Autofac;
 using Cake.Commands;
 using Cake.Common.Modules;
+using Cake.Composition;
+using Cake.Converters;
 using Cake.Core;
 using Cake.Core.Modules;
 using Cake.Core.Composition;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Cake.Core.Reflection;
-using Cake.Internal;
-using Cake.Internal.Composition;
-using Cake.Internal.Converters;
-using Cake.Internal.Diagnostics;
-using Cake.Internal.Temp;
 using Cake.Modules;
+using Cake.Temp;
 using Spectre.CommandLine;
 
 namespace Cake
@@ -43,11 +41,13 @@ namespace Cake
             registrar.RegisterType<CakeConsole>().As<IConsole>().Singleton();
             registrar.RegisterType<CakeBuildLog>().As<ICakeLog>().Singleton();
             
-            registrar.RegisterType<Bootstrapper>().As<IBootstrapper>().Singleton();
+            registrar.RegisterType<Bootstrapper>().Singleton();
             registrar.RegisterType<ModuleSearcher>().Singleton();
             registrar.RegisterType<ModuleLoader>().Singleton();
-            registrar.RegisterType<FilePathConverter>().Singleton();
             registrar.RegisterType<CakeConfigurationProvider>().Singleton();
+
+            registrar.RegisterType<FilePathConverter>().Singleton();
+            registrar.RegisterType<VerbosityConverter>().Singleton();
 
             // Temporary. Remove this later on.
             registrar.RegisterType<AssemblyLoader>().As<IAssemblyLoader>().Singleton();

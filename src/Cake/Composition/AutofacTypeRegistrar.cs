@@ -2,7 +2,7 @@
 using Autofac;
 using Spectre.CommandLine;
 
-namespace Cake.Internal
+namespace Cake.Composition
 {
     internal sealed class AutofacTypeRegistrar : ITypeRegistrar
     {

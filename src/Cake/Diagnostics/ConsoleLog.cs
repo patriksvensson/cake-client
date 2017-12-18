@@ -1,9 +1,9 @@
 ﻿using Cake.Core;
 using Cake.Core.Diagnostics;
 
-namespace Cake.Internal.Diagnostics
+namespace Cake.Diagnostics
 {
-    internal sealed class CakeLog : ICakeLog
+    internal sealed class ConsoleLog : ICakeLog
     {
         private readonly CakeBuildLog _log;
 
@@ -13,7 +13,7 @@ namespace Cake.Internal.Diagnostics
             set => _log.Verbosity = value;
         }
 
-        public CakeLog(IConsole console, LogSettings settings)
+        public ConsoleLog(IConsole console, ConsoleLogSettings settings)
         {
             _log = new CakeBuildLog(console, settings.Verbosity);
         }

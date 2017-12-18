@@ -19,8 +19,4 @@
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Scripting\" />
-  </ItemGroup>
-
 </Project>

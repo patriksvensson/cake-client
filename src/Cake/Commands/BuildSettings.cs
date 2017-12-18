@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
+using Cake.Converters;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.Internal.Converters;
 using Spectre.CommandLine;
 
 namespace Cake.Commands
@@ -17,6 +17,7 @@ namespace Cake.Commands
         [Description("Specifies the amount of information to be displayed.")]
         [CommandOption("-v|--verbosity [VERBOSITY]")]
         [DefaultValue(Verbosity.Diagnostic)]
+        [TypeConverter(typeof(VerbosityConverter))]
         public Verbosity Verbosity { get; set; }
 
         [Description("Performs a debug.")]

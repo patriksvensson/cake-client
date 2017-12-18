@@ -2,7 +2,7 @@
 using System.Linq;
 using Cake.Core;
 
-namespace Cake.Internal
+namespace Cake
 {
     internal sealed class CakeArguments : ICakeArguments
     {

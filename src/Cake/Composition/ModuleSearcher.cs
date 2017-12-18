@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Cake.Core;
 using Cake.Core.Annotations;
 using Cake.Core.Composition;
@@ -10,7 +9,7 @@ using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Reflection;
 
-namespace Cake.Internal
+namespace Cake.Composition
 {
     internal sealed class ModuleSearcher
     {

@@ -12,7 +12,6 @@ using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Reflection;
 using Cake.Core.Scripting;
-using Cake.Internal;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 
@@ -20,7 +19,7 @@ namespace Cake.Scripting.Roslyn
 {
     internal sealed class RoslynScriptSession : IScriptSession
     {
-        private readonly ScriptOptions _options;
+        private readonly RoslynScriptOptions _options;
         private readonly IScriptHost _host;
         private readonly IAssemblyLoader _loader;
         private readonly ICakeLog _log;
@@ -29,7 +28,7 @@ namespace Cake.Scripting.Roslyn
         public HashSet<Assembly> References { get; }
         public HashSet<string> Namespaces { get; }
 
-        public RoslynScriptSession(ScriptOptions options, IScriptHost host, IAssemblyLoader loader, ICakeLog log)
+        public RoslynScriptSession(RoslynScriptOptions options, IScriptHost host, IAssemblyLoader loader, ICakeLog log)
         {
             _options = options;
             _host = host;

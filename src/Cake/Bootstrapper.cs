@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Cake.Commands;
+using Cake.Composition;
 using Cake.Core;
 using Cake.Core.Composition;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.Internal.Temp;
+using Cake.Temp;
 
-namespace Cake.Internal
+namespace Cake
 {
-    internal sealed class Bootstrapper : IBootstrapper
+    public sealed class Bootstrapper
     {
         private readonly IFileSystem _fileSystem;
         private readonly ICakeEnvironment _environment;

@@ -7,7 +7,7 @@ using Autofac;
 using Autofac.Builder;
 using Cake.Core.Composition;
 
-namespace Cake.Internal.Composition
+namespace Cake.Composition
 {
     internal class ContainerRegistrationBuilder<T, TActivator> : ICakeRegistrationBuilder
         where TActivator : IConcreteActivatorData
