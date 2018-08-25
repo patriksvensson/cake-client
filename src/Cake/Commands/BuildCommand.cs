@@ -51,7 +51,8 @@ namespace Cake.Commands
                     ? (IScriptHost)container.Resolve<DryRunScriptHost>()
                     : container.Resolve<BuildScriptHost>();
 
-                runner.Run(host, settings.Script, new CakeArguments(context.Remaining.Parsed).Arguments);
+                runner.Run(host, settings.Script, 
+                    new CakeArguments(context.Remaining.Parsed).Arguments);
             }
 
             return 0;

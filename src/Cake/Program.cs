@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Cake.Commands;
-using Cake.Common.Modules;
 using Cake.Composition;
 using Cake.Converters;
 using Cake.Core;
@@ -8,10 +7,7 @@ using Cake.Core.Modules;
 using Cake.Core.Composition;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
-using Cake.Core.Reflection;
-using Cake.Modules;
 using Spectre.Cli;
-using Cake.Temp;
 
 namespace Cake
 {
@@ -19,13 +15,13 @@ namespace Cake
     {
         public static int Main(string[] args)
         {
-            // Create the command application.
             var app = new CommandApp<RunCommand>(CreateTypeRegistrar());
             app.Configure(config =>
             {
                 config.SetApplicationName("cake");
 
                 config.AddCommand<RunCommand>("run");
+                config.AddCommand<BootstrapCommand>("bootstrap");
                 config.AddCommand<VersionCommand>("version");
             });
 
@@ -48,9 +44,6 @@ namespace Cake
 
             registrar.RegisterType<FilePathConverter>().Singleton();
             registrar.RegisterType<VerbosityConverter>().Singleton();
-
-            // Temporary. Remove this later on.
-            registrar.RegisterType<AssemblyLoader>().As<IAssemblyLoader>().Singleton();
 
             return new AutofacTypeRegistrar(registrar.Builder);
         }

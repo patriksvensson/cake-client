@@ -24,10 +24,6 @@ namespace Cake.Commands
         [CommandOption("-d|--debug")]
         public bool Debug { get; set; }
 
-        [Description("Performs bootstrapping.")]
-        [CommandOption("-b|--bootstrap")]
-        public bool Bootstrap { get; set; }
-
         [Description("Performs a dry run.")]
         [CommandOption("--dryrun")]
         public bool Dryrun { get; set; }
