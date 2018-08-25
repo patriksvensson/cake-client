@@ -42,9 +42,10 @@ namespace Cake.Scripting
         public override async Task<CakeReport> RunTargetAsync(string target)
         {
             var strategy = new DefaultExecutionStrategy(_log);
-            var settings = new ExecutionSettings().SetTarget(target);
+            
+            Settings.SetTarget(target);
 
-            var report = await Engine.RunTargetAsync(Context, strategy, settings).ConfigureAwait(false);
+            var report = await Engine.RunTargetAsync(Context, strategy, Settings).ConfigureAwait(false);
             if (report != null && !report.IsEmpty)
             {
                 _reportPrinter.Write(report);

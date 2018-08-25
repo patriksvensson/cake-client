@@ -44,19 +44,36 @@ namespace Cake.Commands
             using (var container = CreateLifetimeScope(settings, context.Remaining.Parsed, modules, configuration))
             {
                 var runner = container.Resolve<IScriptRunner>();
-                var host = settings.Dryrun
-                    ? (IScriptHost)container.Resolve<DryRunScriptHost>()
-                    : container.Resolve<BuildScriptHost>();
+                var host = GetScriptHost(settings, container);
 
-                runner.Run(host, settings.Script, 
+                if (settings.Exclusive)
+                {
+                    host.Settings.UseExclusiveTarget();
+                }
+
+                runner.Run(host, settings.Script,
                     new CakeArguments(context.Remaining.Parsed).Arguments);
             }
 
             return 0;
         }
 
+        private static ScriptHost GetScriptHost(RunSettings settings, IContainer container)
+        {
+            if (settings.Dryrun)
+            {
+                return container.Resolve<DryRunScriptHost>();
+            }
+            if (settings.ShowDescriptions)
+            {
+                return container.Resolve<DescriptionScriptHost>();
+            }
+
+            return container.Resolve<BuildScriptHost>();
+        }
+
         private static IContainer CreateLifetimeScope(
-            RunSettings settings, 
+            RunSettings settings,
             ILookup<string, string> remaining,
             IEnumerable<ICakeModule> modules,
             ICakeConfiguration configuration)
@@ -79,7 +96,7 @@ namespace Cake.Commands
             registrar.RegisterInstance(configuration).As<ICakeConfiguration>().Singleton();
 
             // Register modules.
-            foreach(var module in modules)
+            foreach (var module in modules)
             {
                 module.Register(registrar);
             }
