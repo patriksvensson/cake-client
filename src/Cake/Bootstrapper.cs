@@ -24,11 +24,11 @@ namespace Cake
             _log = log;
         }
 
-        public ICakeConfiguration GetConfiguration(RunSettings settings, ILookup<string, string> arguments)
+        public ICakeConfiguration GetConfiguration(DirectoryPath root, ILookup<string, string> arguments)
         {
             var provider = new CakeConfigurationProvider(_fileSystem, _environment);
             return provider.CreateConfiguration(
-                settings.Script.GetDirectory(),
+                root,
                 arguments.ToDictionary(x => x.Key, x => x.FirstOrDefault() ?? string.Empty));
         }
 

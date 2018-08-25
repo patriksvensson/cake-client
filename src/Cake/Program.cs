@@ -21,7 +21,7 @@ namespace Cake
                 config.SetApplicationName("cake");
 
                 config.AddCommand<RunCommand>("run");
-                config.AddCommand<BootstrapCommand>("bootstrap");
+                config.AddCommand<BoostrapCommand>("bootstrap");
                 config.AddCommand<VersionCommand>("version");
             });
 

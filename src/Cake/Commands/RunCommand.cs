@@ -7,15 +7,12 @@ using Cake.Composition;
 using Cake.Core;
 using Cake.Core.Composition;
 using Cake.Core.Configuration;
-using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Modules;
 using Cake.Core.Scripting;
-using Cake.Diagnostics;
 using Cake.Modules;
 using Cake.NuGet;
 using Cake.Scripting;
-using Cake.Scripting.Roslyn;
 using Spectre.Cli;
 using IContainer = Autofac.IContainer;
 
@@ -40,7 +37,7 @@ namespace Cake.Commands
             settings.Script = settings.Script.MakeAbsolute(_environment);
 
             // Get the configuration and all modules.
-            var configuration = _bootstrapper.GetConfiguration(settings, context.Remaining.Parsed);
+            var configuration = _bootstrapper.GetConfiguration(settings.Script.GetDirectory(), context.Remaining.Parsed);
             var modules = _bootstrapper.LoadModules(settings, configuration);
 
             // Create a completely new lifetime scope.
