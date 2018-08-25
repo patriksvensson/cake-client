@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Autofac;
 using Cake.Common.Modules;
@@ -43,10 +44,12 @@ namespace Cake.Commands
             var modules = _bootstrapper.LoadModules(settings, configuration);
 
             // Create a completely new lifetime scope.
-            using (var container = CreateLifetimeScope(settings, context.Remaining.Parsed, configuration))
+            using (var container = CreateLifetimeScope(settings, context.Remaining.Parsed, modules, configuration))
             {
                 var runner = container.Resolve<IScriptRunner>();
-                var host = BuildScriptHost(settings, container);
+                var host = settings.Dryrun
+                    ? (IScriptHost)container.Resolve<DryRunScriptHost>()
+                    : container.Resolve<BuildScriptHost>();
 
                 runner.Run(host, settings.Script, new CakeArguments(context.Remaining.Parsed).Arguments);
             }
@@ -54,7 +57,11 @@ namespace Cake.Commands
             return 0;
         }
 
-        private static IContainer CreateLifetimeScope(RunSettings settings, ILookup<string, string> remaining, ICakeConfiguration configuration)
+        private static IContainer CreateLifetimeScope(
+            RunSettings settings, 
+            ILookup<string, string> remaining,
+            IEnumerable<ICakeModule> modules,
+            ICakeConfiguration configuration)
         {
             var registrar = new ContainerRegistrar();
 
@@ -73,16 +80,14 @@ namespace Cake.Commands
             registrar.RegisterType<CakeConsole>().As<IConsole>().Singleton();
             registrar.RegisterInstance(configuration).As<ICakeConfiguration>().Singleton();
 
-            return registrar.Build();
-        }
-
-        private static IScriptHost BuildScriptHost(RunSettings settings, IContainer container)
-        {
-            if (settings.Dryrun)
+            // Register modules.
+            foreach(var module in modules)
             {
-                return container.Resolve<DryRunScriptHost>();
+                module.Register(registrar);
             }
-            return container.Resolve<BuildScriptHost>();
+
+            // Build the registrar.
+            return registrar.Build();
         }
     }
 }

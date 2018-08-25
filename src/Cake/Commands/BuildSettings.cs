@@ -16,7 +16,7 @@ namespace Cake.Commands
 
         [Description("Specifies the amount of information to be displayed.")]
         [CommandOption("-v|--verbosity <VERBOSITY>")]
-        [DefaultValue(Verbosity.Diagnostic)]
+        [DefaultValue(Verbosity.Normal)]
         [TypeConverter(typeof(VerbosityConverter))]
         public Verbosity Verbosity { get; set; }
 
