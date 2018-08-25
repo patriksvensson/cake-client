@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using Spectre.CommandLine;
+using Spectre.Cli;
 
 namespace Cake.Composition
 {

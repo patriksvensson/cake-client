@@ -24,7 +24,7 @@ namespace Cake
             _log = log;
         }
 
-        public ICakeConfiguration GetConfiguration(BuildSettings settings, ILookup<string, string> arguments)
+        public ICakeConfiguration GetConfiguration(RunSettings settings, ILookup<string, string> arguments)
         {
             var provider = new CakeConfigurationProvider(_fileSystem, _environment);
             return provider.CreateConfiguration(
@@ -32,11 +32,11 @@ namespace Cake
                 arguments.ToDictionary(x => x.Key, x => x.FirstOrDefault() ?? string.Empty));
         }
 
-        public IEnumerable<ICakeModule> LoadModules(BuildSettings settings, ICakeConfiguration configuration)
+        public IEnumerable<ICakeModule> LoadModules(RunSettings settings, ICakeConfiguration configuration)
         {
             var moduleLoader = new ModuleLoader(
                 new ModuleSearcher(_fileSystem, _environment, 
-                    new AssemblyLoader(_environment, _fileSystem, _log), _log), 
+                    new AssemblyLoader(_environment, _fileSystem, new AssemblyVerifier()), _log), 
                 _log, _environment);
 
             return moduleLoader.LoadModules(settings, configuration);

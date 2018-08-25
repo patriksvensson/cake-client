@@ -2,11 +2,11 @@
 using Cake.Converters;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Spectre.CommandLine;
+using Spectre.Cli;
 
 namespace Cake.Commands
 {
-    public sealed class BuildSettings
+    public sealed class RunSettings : CommandSettings
     {
         [Description("The Cake script to execute.")]
         [CommandArgument(0, "[SCRIPT]")]
@@ -15,7 +15,7 @@ namespace Cake.Commands
         public FilePath Script { get; set; }
 
         [Description("Specifies the amount of information to be displayed.")]
-        [CommandOption("-v|--verbosity [VERBOSITY]")]
+        [CommandOption("-v|--verbosity <VERBOSITY>")]
         [DefaultValue(Verbosity.Diagnostic)]
         [TypeConverter(typeof(VerbosityConverter))]
         public Verbosity Verbosity { get; set; }

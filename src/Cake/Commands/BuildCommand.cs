@@ -15,46 +15,46 @@ using Cake.Modules;
 using Cake.NuGet;
 using Cake.Scripting;
 using Cake.Scripting.Roslyn;
-using Spectre.CommandLine;
+using Spectre.Cli;
 using IContainer = Autofac.IContainer;
 
 namespace Cake.Commands
 {
     [Description("Runs the build.")]
-    public sealed class BuildCommand : Command<BuildSettings>
+    public sealed class RunCommand : Command<RunSettings>
     {
         private readonly Bootstrapper _bootstrapper;
         private readonly ICakeEnvironment _environment;
 
-        public BuildCommand(Bootstrapper bootstrapper, ICakeEnvironment environment)
+        public RunCommand(Bootstrapper bootstrapper, ICakeEnvironment environment)
         {
             _bootstrapper = bootstrapper;
             _environment = environment;
         }
 
-        public override int Execute(BuildSettings settings, ILookup<string, string> remaining)
+        public override int Execute(CommandContext context, RunSettings settings)
         {
             // Fix the script path.
             settings.Script = settings.Script ?? new FilePath("build.cake");
             settings.Script = settings.Script.MakeAbsolute(_environment);
 
             // Get the configuration and all modules.
-            var configuration = _bootstrapper.GetConfiguration(settings, remaining);
+            var configuration = _bootstrapper.GetConfiguration(settings, context.Remaining.Parsed);
             var modules = _bootstrapper.LoadModules(settings, configuration);
 
             // Create a completely new lifetime scope.
-            using (var container = CreateLifetimeScope(settings, remaining, configuration))
+            using (var container = CreateLifetimeScope(settings, context.Remaining.Parsed, configuration))
             {
                 var runner = container.Resolve<IScriptRunner>();
                 var host = BuildScriptHost(settings, container);
 
-                runner.Run(host, settings.Script, new CakeArguments(remaining).Arguments);
+                runner.Run(host, settings.Script, new CakeArguments(context.Remaining.Parsed).Arguments);
             }
 
             return 0;
         }
 
-        private static IContainer CreateLifetimeScope(BuildSettings settings, ILookup<string, string> remaining, ICakeConfiguration configuration)
+        private static IContainer CreateLifetimeScope(RunSettings settings, ILookup<string, string> remaining, ICakeConfiguration configuration)
         {
             var registrar = new ContainerRegistrar();
 
@@ -76,7 +76,7 @@ namespace Cake.Commands
             return registrar.Build();
         }
 
-        private static IScriptHost BuildScriptHost(BuildSettings settings, IContainer container)
+        private static IScriptHost BuildScriptHost(RunSettings settings, IContainer container)
         {
             if (settings.Dryrun)
             {

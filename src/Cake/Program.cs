@@ -10,8 +10,8 @@ using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Cake.Core.Reflection;
 using Cake.Modules;
+using Spectre.Cli;
 using Cake.Temp;
-using Spectre.CommandLine;
 
 namespace Cake
 {
@@ -20,12 +20,12 @@ namespace Cake
         public static int Main(string[] args)
         {
             // Create the command application.
-            var app = new CommandApp(CreateTypeRegistrar());
+            var app = new CommandApp<RunCommand>(CreateTypeRegistrar());
             app.Configure(config =>
             {
                 config.SetApplicationName("cake");
 
-                config.AddCommand<BuildCommand>("build");
+                config.AddCommand<RunCommand>("run");
                 config.AddCommand<VersionCommand>("version");
             });
 

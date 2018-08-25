@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Cake.Core;
-using Spectre.CommandLine;
+using Spectre.Cli;
 
 namespace Cake.Commands
 {
@@ -12,7 +12,7 @@ namespace Cake.Commands
     {
         private readonly IConsole _console;
 
-        public sealed class Settings
+        public sealed class Settings : CommandSettings
         {
         }
 
@@ -21,7 +21,7 @@ namespace Cake.Commands
             _console = console;
         }
 
-        public override int Execute(Settings settings, ILookup<string, string> remaining)
+        public override int Execute(CommandContext context, Settings settings)
         {
             _console.WriteLine();
             _console.WriteLine(@"             +##   #;;'");
@@ -51,6 +51,7 @@ namespace Cake.Commands
             _console.WriteLine(@"\____/\__,_|_|\_\___\_____/\__,_|_|_|\__,_|");
             _console.WriteLine();
             _console.WriteLine(@"                             Version {0}", GetVersion());
+            _console.WriteLine();
 
             return 0;
         }

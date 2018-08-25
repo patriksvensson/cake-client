@@ -24,7 +24,7 @@ namespace Cake.Composition
             _environment = environment;
         }
 
-        public IEnumerable<ICakeModule> LoadModules(BuildSettings settings, ICakeConfiguration configuration)
+        public IEnumerable<ICakeModule> LoadModules(RunSettings settings, ICakeConfiguration configuration)
         {
             var root = GetModulePath(configuration, settings.Script.GetDirectory());
 
