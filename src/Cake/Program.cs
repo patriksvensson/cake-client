@@ -8,6 +8,10 @@ using Cake.Core.Composition;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Spectre.Cli;
+using Cake.Utilities;
+using Cake.Commands.Run;
+using Cake.Commands.Bootstrap;
+using Cake.Commands.Version;
 
 namespace Cake
 {
@@ -36,8 +40,8 @@ namespace Cake
             registrar.RegisterModule(new CoreModule());
             registrar.RegisterType<CakeConsole>().As<IConsole>().Singleton();
             registrar.RegisterType<CakeBuildLog>().As<ICakeLog>().Singleton();
-            
-            registrar.RegisterType<Bootstrapper>().Singleton();
+
+            registrar.RegisterType<ConfigReader>().Singleton();
             registrar.RegisterType<ModuleSearcher>().Singleton();
             registrar.RegisterType<ModuleLoader>().Singleton();
             registrar.RegisterType<CakeConfigurationProvider>().Singleton();

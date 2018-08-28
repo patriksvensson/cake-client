@@ -2,14 +2,15 @@
 using System.Linq;
 using Cake.Core;
 using Cake.Core.Composition;
+using Spectre.Cli;
 
 namespace Cake.Modules
 {
     internal sealed class ArgumentsModule : ICakeModule
     {
-        private readonly ILookup<string, string> _arguments;
+        private readonly IRemainingArguments _arguments;
 
-        public ArgumentsModule(ILookup<string, string> arguments)
+        public ArgumentsModule(IRemainingArguments arguments)
         {
             _arguments = arguments;
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Cake.Core;
+using Spectre.Cli;
 
 namespace Cake
 {
@@ -8,9 +9,9 @@ namespace Cake
     {
         public Dictionary<string, string> Arguments { get; }
 
-        public CakeArguments(ILookup<string, string> arguments)
+        public CakeArguments(IRemainingArguments arguments)
         {
-            Arguments = arguments.ToDictionary(x => x.Key, x => x.FirstOrDefault() ?? string.Empty);
+            Arguments = arguments.Parsed.ToDictionary(x => x.Key, x => x.FirstOrDefault() ?? string.Empty);
         }
 
         public bool HasArgument(string name)

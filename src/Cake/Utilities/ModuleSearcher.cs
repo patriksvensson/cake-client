@@ -9,9 +9,9 @@ using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Reflection;
 
-namespace Cake.Composition
+namespace Cake.Utilities
 {
-    internal sealed class ModuleSearcher
+    public sealed class ModuleSearcher
     {
         private readonly IFileSystem _fileSystem;
         private readonly ICakeEnvironment _environment;
@@ -54,11 +54,11 @@ namespace Cake.Composition
             return result;
         }
 
-        private Type LoadModule(FilePath path)
+        public Type LoadModule(FilePath path)
         {
             try
             {
-                var assembly = LoadAssembly(path);
+                var assembly = _assemblyLoader.Load(path, true);
 
                 var attribute = assembly.GetCustomAttributes<CakeModuleAttribute>().FirstOrDefault();
                 if (attribute == null)
@@ -79,16 +79,11 @@ namespace Cake.Composition
             {
                 throw;
             }
-            catch
+            catch (Exception ex)
             {
-                _log.Warning("Could not load module '{0}'.", path.FullPath);
+                _log.Warning("Could not load module '{0}'. {1}", path.FullPath, ex);
                 return null;
             }
-        }
-
-        private Assembly LoadAssembly(FilePath path)
-        {
-            return _assemblyLoader.Load(path, true);
         }
     }
 }
